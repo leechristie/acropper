@@ -1,1 +1,5 @@
+# ignore any real input image files
 *.png
+
+# keep the test images
+!test-image*.png
