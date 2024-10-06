@@ -14,13 +14,18 @@ INPUT_FOLDER: str = './input'
 OUTPUT_FOLDER: str = './output'
 
 
-# SET CROP PARAMETERS HERE
-LEFT_CROP = 7
-RIGHT_CROP = 8
-TOP_CROP = 19
-BOTTOM_CROP = 11
+# SET CROP PARAMETERS HERE - BEFORE SPLIT
+LEFT_CROP = 390
+RIGHT_CROP = 388
+TOP_CROP = 0
+BOTTOM_CROP = 0
+
+# SET SPLIT PARAMETERS HERE
 SPLIT_LEFT_RIGHT = True
 REVERSE_SIDE_ORDER = False
+
+# SET SECOND CROP PARAMETERS HERE - AFTER SPLIT
+SECOND_UNIFORM_CROP = 4
 
 
 def crop(image: Image, left: int, right: int, top: int, bottom: int) -> Image:
@@ -58,6 +63,7 @@ def main() -> None:
             images = left_right_split(image)
 
         for image in images:
+            image = crop(image, SECOND_UNIFORM_CROP, SECOND_UNIFORM_CROP, SECOND_UNIFORM_CROP, SECOND_UNIFORM_CROP)
             outfile = os.path.join(OUTPUT_FOLDER, f'{index:08}.png')
             assert (not os.path.exists(outfile)), f'{outfile} already exits; clear output directory'
             image.save(outfile)
